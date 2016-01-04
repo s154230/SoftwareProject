@@ -1,0 +1,40 @@
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+public class PuzzleListener implements KeyListener {
+	PuzzlePanel pPanel;
+	PuzzleModel pModel;
+
+	public PuzzleListener(PuzzleModel pModel, PuzzlePanel pPanel) {
+		this.pModel = pModel;
+		this.pPanel = pPanel; // is it necessary?
+	}
+
+	public void keyTyped(KeyEvent e) {
+		// nothing to do, UNICODE
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		int arrowKey = e.getKeyCode();
+		switch (arrowKey) {
+		case KeyEvent.VK_UP:
+			pModel.moveUp();
+			break;
+		case KeyEvent.VK_DOWN:
+			pModel.moveDown();
+			break;
+		case KeyEvent.VK_LEFT:
+			pModel.moveLeft();
+			break;
+		case KeyEvent.VK_RIGHT:
+			pModel.moveRight();
+			break;
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO
+	}
+}
