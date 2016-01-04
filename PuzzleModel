@@ -1,47 +1,61 @@
+import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
 public class PuzzleModel {
-	PuzzlePanel pPanel;
+	PuzzleFrame pFrame;
+	
 	JLabel nextVal;
 	int blankIndexX;
 	int blankIndexY;
 
-	public PuzzleModel(PuzzlePanel pPanel) {
-		this.pPanel = pPanel;
-		blankIndexX = pPanel.n - 1;
-		blankIndexY = pPanel.n - 1;
+	public PuzzleModel(PuzzleFrame pFrame) {
+		this.pFrame = pFrame;
+		blankIndexX = pFrame.n - 1;
+		blankIndexY = pFrame.n - 1;
 	}
 
 	public void moveUp() {
-		nextVal = pPanel.valueLabel[blankIndexX + 1][blankIndexY];
-		pPanel.valueLabel[blankIndexX][blankIndexY].setText(nextVal.getText());
-		pPanel.valueLabel[blankIndexX + 1][blankIndexY].setText("");
-		blankIndexX++;
-
+		if (blankIndexX != pFrame.n - 1) {
+			nextVal = pFrame.pPanel[blankIndexX + 1][blankIndexY].pLabel;
+			pFrame.pPanel[blankIndexX][blankIndexY].pLabel.setText(nextVal.getText());
+			pFrame.pPanel[blankIndexX + 1][blankIndexY].pLabel.setText("");
+			blankIndexX++;
+			pFrame.pPanel[blankIndexX - 1][blankIndexY].setBackground(Color.CYAN);
+			pFrame.pPanel[blankIndexX][blankIndexY].setBackground(Color.BLUE);
+		}
 	}
 
 	public void moveDown() {
-		nextVal = pPanel.valueLabel[blankIndexX - 1][blankIndexY];
-		pPanel.valueLabel[blankIndexX][blankIndexY].setText(nextVal.getText());
-		pPanel.valueLabel[blankIndexX - 1][blankIndexY].setText("");
-		blankIndexX--;
-
+		if (blankIndexX != 0) {
+			nextVal = pFrame.pPanel[blankIndexX - 1][blankIndexY].pLabel;
+			pFrame.pPanel[blankIndexX][blankIndexY].pLabel.setText(nextVal.getText());
+			pFrame.pPanel[blankIndexX - 1][blankIndexY].pLabel.setText("");
+			blankIndexX--;
+			pFrame.pPanel[blankIndexX + 1][blankIndexY].setBackground(Color.CYAN);
+			pFrame.pPanel[blankIndexX][blankIndexY].setBackground(Color.BLUE);
+		}
 	}
 
 	public void moveLeft() {
-		nextVal = pPanel.valueLabel[blankIndexX][blankIndexY + 1];
-		pPanel.valueLabel[blankIndexX][blankIndexY].setText(nextVal.getText());
-		pPanel.valueLabel[blankIndexX][blankIndexY + 1].setText("");
-		blankIndexY++;
+		if (blankIndexY != pFrame.n - 1) {
+			nextVal = pFrame.pPanel[blankIndexX][blankIndexY + 1].pLabel;
+			pFrame.pPanel[blankIndexX][blankIndexY].pLabel.setText(nextVal.getText());
+			pFrame.pPanel[blankIndexX][blankIndexY + 1].pLabel.setText("");
+			blankIndexY++;
+			pFrame.pPanel[blankIndexX][blankIndexY - 1].setBackground(Color.CYAN);
+			pFrame.pPanel[blankIndexX][blankIndexY].setBackground(Color.BLUE);
+		}
 	}
 
 	public void moveRight() {
-
-		nextVal = pPanel.valueLabel[blankIndexX][blankIndexY - 1];
-		pPanel.valueLabel[blankIndexX][blankIndexY].setText(nextVal.getText());
-		pPanel.valueLabel[blankIndexX][blankIndexY - 1].setText("");
-		blankIndexY--;
-
+		if (blankIndexY != 0) {
+			nextVal = pFrame.pPanel[blankIndexX][blankIndexY - 1].pLabel;
+			pFrame.pPanel[blankIndexX][blankIndexY].pLabel.setText(nextVal.getText());
+			pFrame.pPanel[blankIndexX][blankIndexY - 1].pLabel.setText("");
+			blankIndexY--;
+			pFrame.pPanel[blankIndexX][blankIndexY + 1].setBackground(Color.CYAN);
+			pFrame.pPanel[blankIndexX][blankIndexY].setBackground(Color.BLUE);
+		}
 	}
 }
