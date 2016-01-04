@@ -1,5 +1,5 @@
 public class PuzzleDriver {
 	public static void main(String[] args){
-		PuzzleFrame puzzleFrame = new PuzzleFrame();
+		PuzzleFrame puzzleFrame = new PuzzleFrame(args[0]);
 	}
 }
