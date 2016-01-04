@@ -1,0 +1,12 @@
+import javax.swing.JFrame;
+
+public class PuzzleFrame extends JFrame {
+	public PuzzleFrame() {
+		PuzzlePanel puzzlePanel = new PuzzlePanel(900, 900);
+		this.getContentPane().add(puzzlePanel, "Center");
+		this.setVisible(true);
+		this.setTitle("wauw");
+		this.pack();
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+}
