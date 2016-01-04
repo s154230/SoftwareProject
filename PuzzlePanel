@@ -1,3 +1,4 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -10,9 +11,11 @@ public class PuzzlePanel extends JPanel{
 	
 	public PuzzlePanel(int width, int height){
 		this.setPreferredSize(new Dimension(width,height));
+		
+		BorderLayout layout = new BorderLayout();
+		this.setLayout(layout);
 	
 		pLabel = new JLabel(); 
-		
 		this.add(pLabel);
 		pLabel.setHorizontalAlignment(JLabel.CENTER);
 	}
