@@ -38,7 +38,6 @@ public class PuzzleFrame extends JFrame {
 		pPanel[n - 1][n - 1].setBackground(Color.BLUE);
 
 		PuzzleListener listener = new PuzzleListener(pModel, this);
-		this.setFocusable(true);
 		this.addKeyListener(listener);
 		
 		this.setVisible(true);
