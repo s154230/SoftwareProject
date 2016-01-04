@@ -1,0 +1,47 @@
+import javax.swing.JButton;
+import javax.swing.JLabel;
+
+public class PuzzleModel {
+	PuzzlePanel pPanel;
+	JLabel nextVal;
+	int blankIndexX;
+	int blankIndexY;
+
+	public PuzzleModel(PuzzlePanel pPanel) {
+		this.pPanel = pPanel;
+		blankIndexX = pPanel.n - 1;
+		blankIndexY = pPanel.n - 1;
+	}
+
+	public void moveUp() {
+		nextVal = pPanel.valueLabel[blankIndexX + 1][blankIndexY];
+		pPanel.valueLabel[blankIndexX][blankIndexY].setText(nextVal.getText());
+		pPanel.valueLabel[blankIndexX + 1][blankIndexY].setText("");
+		blankIndexX++;
+
+	}
+
+	public void moveDown() {
+		nextVal = pPanel.valueLabel[blankIndexX - 1][blankIndexY];
+		pPanel.valueLabel[blankIndexX][blankIndexY].setText(nextVal.getText());
+		pPanel.valueLabel[blankIndexX - 1][blankIndexY].setText("");
+		blankIndexX--;
+
+	}
+
+	public void moveLeft() {
+		nextVal = pPanel.valueLabel[blankIndexX][blankIndexY + 1];
+		pPanel.valueLabel[blankIndexX][blankIndexY].setText(nextVal.getText());
+		pPanel.valueLabel[blankIndexX][blankIndexY + 1].setText("");
+		blankIndexY++;
+	}
+
+	public void moveRight() {
+
+		nextVal = pPanel.valueLabel[blankIndexX][blankIndexY - 1];
+		pPanel.valueLabel[blankIndexX][blankIndexY].setText(nextVal.getText());
+		pPanel.valueLabel[blankIndexX][blankIndexY - 1].setText("");
+		blankIndexY--;
+
+	}
+}
