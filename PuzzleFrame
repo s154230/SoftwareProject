@@ -1,11 +1,48 @@
+import java.awt.Color;
+import java.awt.GridLayout;
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 public class PuzzleFrame extends JFrame {
-	public PuzzleFrame() {
-		PuzzlePanel puzzlePanel = new PuzzlePanel(900, 900);
+	PuzzleModel pModel;
+	PuzzlePanel[][] pPanel;
+	int n;
+
+	public PuzzleFrame(String dim) {
+		n = Integer.parseInt(dim);
+		this.pModel = new PuzzleModel(this);
+		pPanel = new PuzzlePanel[n][n];
 		this.getContentPane().add(puzzlePanel, "Center");
+		
+		GridLayout gridLayout = new GridLayout(n, n);
+		this.setLayout(gridLayout);
+		
+		String[] list = { "2", "3", "1", "4", "5", "6", "7", "8", "" };
+		int counter = 0;
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				pPanel[i][j] = new PuzzlePanel(300, 300);
+				pPanel[i][j].pLabel.setText("" + (list[counter]));
+				this.getContentPane().add(pPanel[i][j]);
+				counter++;
+				pPanel[i][j].setBackground(Color.CYAN);
+				pPanel[i][j].setBorder(BorderFactory.createLineBorder(Color.YELLOW));
+
+				// PuzzleListener puzzleList = new
+				// PuzzleListener(puzzleModel[i]);
+				// puzzleModel[i].addActionListener(puzzleList);
+			}
+
+		}
+		pPanel[n - 1][n - 1].setBackground(Color.BLUE);
+
+		PuzzleListener listener = new PuzzleListener(pModel, this);
+		this.setFocusable(true);
+		this.addKeyListener(listener);
+		
 		this.setVisible(true);
-		this.setTitle("wauw");
+		this.setTitle("15-puzzle");
 		this.pack();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
