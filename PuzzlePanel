@@ -1,0 +1,52 @@
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.GridLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class PuzzlePanel extends JPanel{
+	int blankIndex; 
+	int n = 3;
+	PuzzleModel pModel;
+	String[] list = {"2","3","1","4","5","6","7","8",""};
+	JLabel valueLabel[][] = new JLabel[n][n];
+	
+	
+	public PuzzlePanel(int width, int height){
+		this.pModel = new PuzzleModel(this);
+		PuzzleListener listener = new PuzzleListener(pModel, this);
+		this.setFocusable(true);
+		this.addKeyListener(listener);
+		this.setPreferredSize(new Dimension(width,height));
+		GridLayout gridLayout = new GridLayout(n,n);
+		this.setLayout(gridLayout);
+		
+		int counter = 0;
+		for(int i = 0; i<n; i++){
+			for (int j = 0; j<n; j++){
+				valueLabel[i][j]= new JLabel();
+				valueLabel[i][j].setText(""+(list[counter]));
+				this.add(valueLabel[i][j]);
+				valueLabel[i][j].setHorizontalAlignment(JLabel.CENTER);
+				counter++;
+			// PuzzleListener puzzleList = new PuzzleListener(puzzleModel[i]); 
+			// puzzleModel[i].addActionListener(puzzleList);	
+			}
+			
+			
+		}	
+		repaint();
+	}
+			
+	public void paintComponent(Graphics g) {
+			super.paintComponent(g);
+
+			g.drawLine(300, 0, 300, 900);
+			g.drawLine(300, 0, 300, 900);
+			g.drawLine(300, 0, 300, 900);
+			g.drawLine(300, 0, 300, 900);
+			
+			
+	}
+}
