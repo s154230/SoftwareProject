@@ -5,18 +5,23 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import java.awt.Font;
 
 public class PuzzlePanel extends JPanel{
 	JLabel pLabel;
+	int fontSize;
 	
-	public PuzzlePanel(int width, int height){
+	public PuzzlePanel(PuzzleFrame pFrame, int width, int height){
 		this.setPreferredSize(new Dimension(width,height));
 		
-		BorderLayout layout = new BorderLayout();
-		this.setLayout(layout);
-	
+		this.setLayout(new BorderLayout());
+
 		pLabel = new JLabel(); 
-		this.add(pLabel);
 		pLabel.setHorizontalAlignment(JLabel.CENTER);
+		
+		fontSize = 600/pFrame.n/2;
+		pLabel.setFont(new Font("Georgia", Font.PLAIN, fontSize));
+		
+		this.add(pLabel);
 	}
 }
