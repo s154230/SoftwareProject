@@ -20,12 +20,16 @@ public class PuzzleListener implements KeyListener {
 		switch (arrowKey) {
 		case KeyEvent.VK_UP:
 			pModel.moveUp();
+			if (pModel.blankIndexX == pFrame.n - 1 && pModel.blankIndexY == pFrame.n - 1) {
+				pModel.check();
 			break;
 		case KeyEvent.VK_DOWN:
 			pModel.moveDown();
 			break;
 		case KeyEvent.VK_LEFT:
 			pModel.moveLeft();
+			if (pModel.blankIndexX == pFrame.n - 1 && pModel.blankIndexY == pFrame.n - 1) {
+				pModel.check();
 			break;
 		case KeyEvent.VK_RIGHT:
 			pModel.moveRight();
