@@ -1,10 +1,11 @@
 import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class PuzzleModel {
 	PuzzleFrame pFrame;
-	
+	String[][] checkList;
 	JLabel nextVal;
 	int blankIndexX;
 	int blankIndexY;
@@ -13,6 +14,16 @@ public class PuzzleModel {
 		this.pFrame = pFrame;
 		blankIndexX = pFrame.n - 1;
 		blankIndexY = pFrame.n - 1;
+		
+		checkList = new String[pFrame.n][pFrame.n];
+		int counter = 1;
+		for (int i = 0; i < pFrame.n; i++) {
+			for (int j = 0; j < pFrame.n; j++) {
+				checkList[i][j] = "" + counter;
+				counter++;
+			}
+		}
+		checkList[pFrame.n - 1][pFrame.n - 1] = "";
 	}
 
 	public void moveUp() {
@@ -21,8 +32,8 @@ public class PuzzleModel {
 			pFrame.pPanel[blankIndexX][blankIndexY].pLabel.setText(nextVal.getText());
 			pFrame.pPanel[blankIndexX + 1][blankIndexY].pLabel.setText("");
 			blankIndexX++;
-			pFrame.pPanel[blankIndexX - 1][blankIndexY].setBackground(Color.CYAN);
-			pFrame.pPanel[blankIndexX][blankIndexY].setBackground(Color.BLUE);
+			pFrame.pPanel[blankIndexX - 1][blankIndexY].setBackground(new Color(77, 176, 230));
+			pFrame.pPanel[blankIndexX][blankIndexY].setBackground(Color.WHITE);
 		}
 	}
 
@@ -32,8 +43,8 @@ public class PuzzleModel {
 			pFrame.pPanel[blankIndexX][blankIndexY].pLabel.setText(nextVal.getText());
 			pFrame.pPanel[blankIndexX - 1][blankIndexY].pLabel.setText("");
 			blankIndexX--;
-			pFrame.pPanel[blankIndexX + 1][blankIndexY].setBackground(Color.CYAN);
-			pFrame.pPanel[blankIndexX][blankIndexY].setBackground(Color.BLUE);
+			pFrame.pPanel[blankIndexX + 1][blankIndexY].setBackground(new Color(77, 176, 230));
+			pFrame.pPanel[blankIndexX][blankIndexY].setBackground(Color.WHITE);
 		}
 	}
 
@@ -43,8 +54,8 @@ public class PuzzleModel {
 			pFrame.pPanel[blankIndexX][blankIndexY].pLabel.setText(nextVal.getText());
 			pFrame.pPanel[blankIndexX][blankIndexY + 1].pLabel.setText("");
 			blankIndexY++;
-			pFrame.pPanel[blankIndexX][blankIndexY - 1].setBackground(Color.CYAN);
-			pFrame.pPanel[blankIndexX][blankIndexY].setBackground(Color.BLUE);
+			pFrame.pPanel[blankIndexX][blankIndexY - 1].setBackground(new Color(77, 176, 230));
+			pFrame.pPanel[blankIndexX][blankIndexY].setBackground(Color.WHITE);
 		}
 	}
 
@@ -54,8 +65,22 @@ public class PuzzleModel {
 			pFrame.pPanel[blankIndexX][blankIndexY].pLabel.setText(nextVal.getText());
 			pFrame.pPanel[blankIndexX][blankIndexY - 1].pLabel.setText("");
 			blankIndexY--;
-			pFrame.pPanel[blankIndexX][blankIndexY + 1].setBackground(Color.CYAN);
-			pFrame.pPanel[blankIndexX][blankIndexY].setBackground(Color.BLUE);
+			pFrame.pPanel[blankIndexX][blankIndexY + 1].setBackground(new Color(77, 176, 230));
+			pFrame.pPanel[blankIndexX][blankIndexY].setBackground(Color.WHITE);
+		}
+	}
+	
+	public void check() {
+		int counter = 0;
+		for (int i = 0; i < pFrame.n; i++) {
+			for (int j = 0; j < pFrame.n; j++) {
+				if (pFrame.pPanel[i][j].pLabel.getText().equals(checkList[i][j])) {
+					counter++;
+				}
+			}
+		}
+		if (counter == pFrame.n * pFrame.n) {
+			JOptionPane.showMessageDialog(null, "Congratulations!", "You ROCK", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 }
