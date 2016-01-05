@@ -11,7 +11,21 @@ public class PuzzleFrame extends JFrame {
 	int n;
 
 	public PuzzleFrame(String dim) {
-		n = Integer.parseInt(dim);
+		int counter = 0;
+		for (int i = 0; i < dim.length(); i++) {
+			if (Character.isDigit(dim.charAt(i))) {
+				counter++;
+			}
+		}
+	
+		if (counter < dim.length()) {
+			JOptionPane.showMessageDialog(null, "Invalid input", "Inane warning", JOptionPane.WARNING_MESSAGE);
+		} else {
+			n = Integer.parseInt(dim);
+			if (n < 3 || n > 100) {
+				JOptionPane.showMessageDialog(null, "Invalid grid size", "Inane warning", JOptionPane.WARNING_MESSAGE);
+		}
+		
 		this.pModel = new PuzzleModel(this);
 		pPanel = new PuzzlePanel[n][n];
 		this.getContentPane().add(puzzlePanel, "Center");
@@ -19,24 +33,25 @@ public class PuzzleFrame extends JFrame {
 		GridLayout gridLayout = new GridLayout(n, n);
 		this.setLayout(gridLayout);
 		
-		String[] list = { "2", "3", "1", "4", "5", "6", "7", "8", "" };
-		int counter = 0;
+		int value = 0;
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < n; j++) {
-				pPanel[i][j] = new PuzzlePanel(300, 300);
-				pPanel[i][j].pLabel.setText("" + (list[counter]));
+				pPanel[i][j] = new PuzzlePanel(this, 600 / n, 600 / n);
+				pPanel[i][j].pLabel.setText("" + (value + 1));
 				this.getContentPane().add(pPanel[i][j]);
-				counter++;
-				pPanel[i][j].setBackground(Color.CYAN);
-				pPanel[i][j].setBorder(BorderFactory.createLineBorder(Color.YELLOW));
+				value++;
+				pPanel[i][j].setBackground(new Color(77, 176, 230));
+				pPanel[i][j].setBorder(BorderFactory.createLineBorder(Color.WHITE));
 
-				// PuzzleListener puzzleList = new
-				// PuzzleListener(puzzleModel[i]);
-				// puzzleModel[i].addActionListener(puzzleList);
 			}
 
 		}
-		pPanel[n - 1][n - 1].setBackground(Color.BLUE);
+		
+		pPanel[0][0].pLabel.setText("2");
+		pPanel[0][1].pLabel.setText("3");
+		pPanel[0][2].pLabel.setText("1");
+		pPanel[n - 1][n - 1].pLabel.setText("");
+		pPanel[n - 1][n - 1].setBackground(Color.WHITE);
 
 		PuzzleListener listener = new PuzzleListener(pModel, this);
 		this.addKeyListener(listener);
@@ -44,6 +59,7 @@ public class PuzzleFrame extends JFrame {
 		this.setVisible(true);
 		this.setTitle("15-puzzle");
 		this.pack();
+		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }
