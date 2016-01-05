@@ -2,6 +2,7 @@ import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import java.util.Random;
 
 public class PuzzleModel {
 	PuzzleFrame pFrame;
@@ -81,6 +82,29 @@ public class PuzzleModel {
 		}
 		if (counter == pFrame.n * pFrame.n) {
 			JOptionPane.showMessageDialog(null, "Congratulations!", "You ROCK", JOptionPane.INFORMATION_MESSAGE);
+		}
+	}
+	
+	public void shuffle() {
+		Random random = new Random();
+		for (int i = 0; i < pFrame.n * 50; i++) { // OVERVEJELSE
+			int randomInt = random.nextInt(4);
+
+			switch (randomInt) {
+			case 0:
+				moveUp();
+				break;
+			case 1:
+				moveDown();
+				break;
+			case 2:
+				moveLeft();
+				break;
+			case 3:
+				moveRight();
+				break;
+			}
+
 		}
 	}
 }
