@@ -1,20 +1,35 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 public class PuzzleFrame extends JFrame {
 	PuzzleModel pModel;
 	PuzzlePanel[][] pPanel;
 	JLayeredPane gamePanel;
-	JPanel extraPanel;
+	JPanel infoPanel;
+	JPanel settingsPanel;
+	JPanel clockPanel;
+	JPanel movesPanel;
+	JPanel highScorePanel;
+	Timer timer;
+	JLabel clock;
+	JButton pauseButton;
+	JButton settingsButton;
 	int n;
 
 	public PuzzleFrame(String dim) {
+		/*
+		 * Check for valid input
+		 */
 		int counter = 0;
 		for (int i = 0; i < dim.length(); i++) {
 			if (Character.isDigit(dim.charAt(i))) {
@@ -32,15 +47,66 @@ public class PuzzleFrame extends JFrame {
 		
 		this.pModel = new PuzzleModel(this);
 		pPanel = new PuzzlePanel[n][n];
+		
+		PuzzleListener listener = new PuzzleListener(pModel, this);
+		this.addKeyListener(listener);
+		
+		/*
+		 * Information panel (number of moves, time elapsed, high score)
+		 */
+		infoPanel = new JPanel();
+		infoPanel.setPreferredSize(new Dimension(200, 600));
+		infoPanel.setLayout(new GridLayout(4, 1));
+		infoPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		this.add(infoPanel, "East");
+		
+		/*
+		 * Display number of moves
+		 */
+		
+		JLabel mLabel = new JLabel("Moves: 0");
+		infoPanel.add(mLabel);
+		mLabel.setHorizontalAlignment(JLabel.CENTER);
+
+		/*
+		 * Stop watch
+		 */
+		TimerListener timerListener = new TimerListener(this, listener);
+		
+		pauseButton = new JButton("Pause");
+		pauseButton.addActionListener(listener);
+		
+		clockPanel = new JPanel();
+		infoPanel.add(clockPanel);
+		// clockPanel.setBackground(Color.GRAY);
+		clockPanel.setLayout(new BorderLayout());
+
+		clock = new JLabel("00:00");
+		clock.setHorizontalAlignment(JLabel.CENTER);
+		clockPanel.add(clock);
+		timer = new Timer(1000, timerListener);
+		timer.start();
+		
+		infoPanel.add(pauseButton);
+		pauseButton.setFocusable(false);
+		
+		/*
+		 * Settings button
+		 */
+
+		settingsButton = new JButton("Help and settings");
+		settingsButton.addActionListener(listener);
+		infoPanel.add(settingsButton);
+		settingsButton.setFocusable(false);
+		
+		/*
+		 * Game panel (for puzzle tiles)
+		 */
 		gamePanel = new JLayeredPane();
-		extraPanel = new JPanel();
-		
-		GridLayout gridLayout = new GridLayout(n, n);
-		gamePanel.setLayout(gridLayout);
-		
+		gamePanel.setLayout(new GridLayout(n, n));
 		this.add(gamePanel);
-		this.add(extraPanel, "North");
-		
+	
+		// Initiate puzzle panels
 		int value = 0;
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < n; j++) {
@@ -54,21 +120,18 @@ public class PuzzleFrame extends JFrame {
 			}
 
 		}
-		
-		/*pPanel[0][0].pLabel.setText("2");
-		pPanel[0][1].pLabel.setText("3");
-		pPanel[0][2].pLabel.setText("1");*/
+		// Create blank panel
 		pPanel[n - 1][n - 1].pLabel.setText("");
 		pPanel[n - 1][n - 1].setBackground(Color.WHITE);
 
+		// Ready board
 		pModel.shuffle();
-		PuzzleListener listener = new PuzzleListener(pModel, this);
-		this.addKeyListener(listener);
 		
 		this.setVisible(true);
 		this.setTitle("15-puzzle");
 		this.pack();
 		this.setLocationRelativeTo(null);
+		// this.getRootPane().setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }
