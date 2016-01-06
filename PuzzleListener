@@ -1,13 +1,18 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class PuzzleListener implements KeyListener {
-	PuzzlePanel pPanel;
-	PuzzleModel pModel;
+import javax.swing.JLabel;
 
-	public PuzzleListener(PuzzleModel pModel, PuzzlePanel pPanel) {
+public class PuzzleListener implements KeyListener, ActionListener  {
+	PuzzleFrame pFrame;
+	PuzzleModel pModel;
+	boolean isPaused = false;
+
+	public PuzzleListener(PuzzleModel pModel, PuzzleFrame pFrame) {
 		this.pModel = pModel;
-		this.pPanel = pPanel; // is it necessary?
+		this.pFrame = pFrame; // is it necessary?
 	}
 
 	public void keyTyped(KeyEvent e) {
@@ -16,29 +21,43 @@ public class PuzzleListener implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+	if (!isPaused){
 		int arrowKey = e.getKeyCode();
 		switch (arrowKey) {
 		case KeyEvent.VK_UP:
 			pModel.moveUp();
 			if (pModel.blankIndexX == pFrame.n - 1 && pModel.blankIndexY == pFrame.n - 1) {
 				pModel.check();
+			}
 			break;
 		case KeyEvent.VK_DOWN:
 			pModel.moveDown();
+
 			break;
 		case KeyEvent.VK_LEFT:
 			pModel.moveLeft();
 			if (pModel.blankIndexX == pFrame.n - 1 && pModel.blankIndexY == pFrame.n - 1) {
 				pModel.check();
+			}
 			break;
 		case KeyEvent.VK_RIGHT:
 			pModel.moveRight();
+
 			break;
 		}
 	}
+}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO
+		// TODO Auto-generated method stub
+
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		String command = e.getActionCommand();
+		if (command.equals("Pause")) {
+			isPaused = !isPaused;
+		}
 	}
 }
