@@ -1,0 +1,39 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class TimerListener implements ActionListener {
+	PuzzleFrame pFrame;
+	PuzzleModel pModel;
+	PuzzleListener pListener;
+	int sec = 0;
+	int min = 0;
+	String time = "00:00";
+
+	public TimerListener(PuzzleFrame pFrame, PuzzleListener pListener) {
+		this.pFrame = pFrame;
+		this.pListener = pListener;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (!pListener.isPaused){
+		if (sec == 59) {
+			sec = 0;
+			min++;
+		} else {
+			sec++;
+		}
+		if (sec < 10 && min < 10) {
+			time = "0" + min + ":" + "0" + sec;
+		} else if (sec < 10 && min >= 10) {
+			time = min + ":" + "0" + sec;
+		} else if (sec >= 10 && min < 10) {
+			time = "0" + min + ":" + sec;
+		} else {
+			time = min + ":" + sec;
+		}
+		pFrame.clock.setText(time);
+		}
+	
+	}
+}
