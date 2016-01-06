@@ -1,8 +1,10 @@
-import java.awt.Color;
+import java.awt.*;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import java.util.Random;
 
 public class PuzzleModel {
 	PuzzleFrame pFrame;
@@ -72,16 +74,17 @@ public class PuzzleModel {
 	}
 	
 	public void check() {
-		int counter = 0;
+		int numberOfEquals = 0;
 		for (int i = 0; i < pFrame.n; i++) {
 			for (int j = 0; j < pFrame.n; j++) {
 				if (pFrame.pPanel[i][j].pLabel.getText().equals(checkList[i][j])) {
-					counter++;
+					numberOfEquals++;
 				}
 			}
 		}
-		if (counter == pFrame.n * pFrame.n) {
-			JOptionPane.showMessageDialog(null, "Congratulations!", "You ROCK", JOptionPane.INFORMATION_MESSAGE);
+		if (numberOfEquals == pFrame.n * pFrame.n) {
+			this.pFrame.timer.stop();
+			JOptionPane.showMessageDialog(null, "Congratulations! You ROCK", "Puzzle finished", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 	
